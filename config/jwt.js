@@ -1,3 +1,4 @@
+// create a token 
 const jwt = require("jsonwebtoken");
 
 const token = (email) => {

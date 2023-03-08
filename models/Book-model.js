@@ -67,14 +67,16 @@ const createBook = async (data, file) => {
   const s3Params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
     Key: data.name,
-    Body: "image/jpg" ,
+    Body: "image/jpg",
     ContentType: "",
   };
   console.log("s3", s3Params);
   console.log("hello");
 
   const s3Response = await s3.upload(s3Params).promise();
-  const coverImageUrl = s3Response.Location;
+  console.log(s3Response)
+  const coverImageUrl = s3Response.Key
+
 
   // Create a new book object with the uploaded image URL
   const book = new Book({
@@ -126,16 +128,27 @@ const createBook = async (data, file) => {
 //   }
 //   return book.save();
 // };
+deleteBook = (_id) => {
+  return Book.findByIdAndDelete({ _id })
+}
 
-// find all by id
+updateBook = (_id, update) => {
+  return Book.findOneAndUpdate({ _id }, { $set: update })
+}
+
+findAllBook = () => {
+  return Book.find()
+}
+
+// find all by user id
 findAllBookById = (userId) => {
-  return Book.find({ userId });
+  return Book.find({ userId: mongoose.Types.ObjectId(userId) });
 };
 
-// find one by id
-findBookById = (userId) => {
-  return Book.findById({ userId });
-};
+// find book by id 
+findBookById = (_id) => {
+  return Book.findById({ _id })
+}
 
 // find by name
 findBookByName = (name) => {
@@ -154,9 +167,13 @@ findBooksGreatThen = (date) => {
   return Book.find({ $match: { release_date: { $gte: date } } });
 };
 module.exports = {
+  findAllBook,
   findAllBookById,
   createBook,
   findBookByName,
   findBooksLessThen,
   findBooksGreatThen,
+  findBookById,
+  updateBook,
+  deleteBook
 };
