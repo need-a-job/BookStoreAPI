@@ -77,7 +77,6 @@ const createBook = async (data, file) => {
   console.log(s3Response)
   const coverImageUrl = s3Response.Key
 
-
   // Create a new book object with the uploaded image URL
   const book = new Book({
     userId: data.userId,
@@ -87,7 +86,7 @@ const createBook = async (data, file) => {
     sold: data.sold,
     release_date: data.release_date,
     children: data.children,
-    image: coverImageUrl,
+    image: `https://images-for-my-books-rp.s3.ap-northeast-1.amazonaws.com/${coverImageUrl}`,
   });
 
   try {
