@@ -8,7 +8,7 @@ const bookSchema = joi.object({
   sold: joi.number(),
   release_date: joi.string().required(),
   children: joi.boolean().required(),
-  image: joi.string(),
+  image: joi.any(),
 });
 
 const bookValidation = (userData) => {

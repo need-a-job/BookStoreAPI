@@ -11,11 +11,13 @@ const router = express.Router();
 router.post("/book_publish", upload.single("image"), async (req, res) => {
   try {
     // validate
+    console.log(req.headers)
     const validatedValue = await bookValidation(req.body);
 
     const file = req.file
 
     if (file == null) {
+      console.log('image not found in req');
       return res.status(400).json({ "message": "please choose the file" })
     }
 
