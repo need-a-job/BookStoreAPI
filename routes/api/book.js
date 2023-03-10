@@ -119,7 +119,7 @@ router.patch('/book', async (req, res) => {
 
 router.delete('/book/', async (req, res) => {
   try {
-    const book = bookModel.deleteBook(req.body._id)
+    const book = bookModel.deleteBook(req.query._id)
     res.status(200).send(`${book.name} has been deleted`)
   } catch (err) {
     res.status(500).json({ err: err.message })
